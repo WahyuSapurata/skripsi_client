@@ -3,6 +3,7 @@ import {
   IconButton,
   TextField,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { useContext, useEffect } from "react";
@@ -33,12 +34,15 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import refreshToken from "../../middleware/RefreshToken";
+import { App } from "../../contex";
 
 const Topbar = () => {
+  const app = useContext(App);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const navigate = useNavigate();
+  const isNonMobile = useMediaQuery("(max-width:600px)");
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -48,16 +52,11 @@ const Topbar = () => {
     });
   }, []);
 
-  function handleLogout() {
-    window.location.reload(false);
-  }
-
   const logout = async () => {
     try {
       await axios.delete("http://localhost:3100/logout");
       sessionStorage.removeItem("auth");
       navigate("/");
-      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }
@@ -130,17 +129,22 @@ const Topbar = () => {
   return (
     <Box
       display="flex"
-      justifyContent="space-between"
+      zIndex="999"
       p="10px 20px"
       sx={{
         position: "fixed",
         width: "-webkit-fill-available",
         backgroundColor: colors.grey[1000],
         boxShadow: "0 0 8px #888888",
+        justifyContent: isNonMobile ? "end" : "space-between",
       }}
     >
       {/* Search Bar */}
-      <Box display="flex">
+      <Box
+        sx={{
+          display: isNonMobile ? "none" : "flex",
+        }}
+      >
         <CssTextField
           label="Search"
           id="outlined-size-small"
@@ -190,9 +194,9 @@ const Topbar = () => {
             textAlign="start"
             color={colors.typography[100]}
           >
-            Role Admin
+            Owner
             <span style={{ fontSize: "12px", display: "block" }}>
-              {sessionStorage.getItem("email_pengguna")}
+              {app.profile.email_pengguna}
             </span>
           </Typography>
           {open ? <ExpandLess /> : <ExpandMore />}

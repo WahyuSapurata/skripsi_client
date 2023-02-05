@@ -18,17 +18,24 @@ import Line from "./pages/line";
 // import Geography from "./pages/geography";
 
 import Login from "./pages/login";
+import UserManagement from "./pages/userManagement";
+import AddUserManagement from "./pages/addData/addUserManagement";
+import EditUserManagement from "./pages/editData/editUserManagement";
+import Loading from "./components/Loading";
+// import { useContext, useEffect } from "react";
 // import { useEffect } from "react";
 // import refreshToken from "./middleware/RefreshToken";
 
 function App() {
   const [theme, colorMode] = useMode();
   // const navigate = useNavigate();
+  // const app = useContext(App);
 
   // useEffect(() => {
-  //   refreshToken().catch(() => {
-  //     navigate("/");
-  //   });
+  //   app.setBackdrop({ open: true });
+  //   setTimeout(() => {
+  //     app.setBackdrop({ open: false });
+  //   }, 2000);
   // }, []);
 
   return (
@@ -36,6 +43,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppContext>
+          <Loading />
           <div className="app">
             {/* <Sidebar /> */}
             {/* <main className="content"> */}
@@ -44,6 +52,15 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/userManagement" element={<UserManagement />} />
+              <Route
+                path="/addUserManagement"
+                element={<AddUserManagement />}
+              />
+              <Route
+                path="/editUserManagement/:id"
+                element={<EditUserManagement />}
+              />
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />

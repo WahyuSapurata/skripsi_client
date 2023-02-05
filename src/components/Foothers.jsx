@@ -8,6 +8,7 @@ const Foother = () => {
   return (
     <Box
       display="flex"
+      zIndex="999"
       justifyContent="space-between"
       p="15px 20px"
       sx={{

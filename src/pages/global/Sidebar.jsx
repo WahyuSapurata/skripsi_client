@@ -1,8 +1,17 @@
-import { useContext, useState } from "react";
+import { forwardRef, useContext, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import {
+  Avatar,
+  Backdrop,
+  Box,
+  CircularProgress,
+  IconButton,
+  Snackbar,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -18,14 +27,16 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MenuOpenIconIcon from "@mui/icons-material/MenuOpen";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import GroupIcon from "@mui/icons-material/Group";
 import { App } from "../../contex";
 import { useEffect } from "react";
 import refreshToken from "../../middleware/RefreshToken";
-// import { useSession } from "../../middleware/UseSession";
+import axiosJWT from "../../middleware/Jwt";
+
+import MuiAlert from "@mui/material/Alert";
+import Loading from "../../components/Loading";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   return (
     <MenuItem
       active={selected === title}
@@ -48,18 +59,21 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [Position, setPosition] = useState("");
   const navigate = useNavigate();
-  // const [session] = useSession();
 
-  // console.log(session);
+  const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
   function getSize() {
     setWidth(window.innerWidth);
   }
 
   useEffect(() => {
+    app.setBackdrop({ open: true });
     refreshToken().catch(() => {
       navigate("/");
     });
+    getUserById();
     setSelected(app.title);
     window.addEventListener("resize", getSize);
     if (width < 600) {
@@ -71,6 +85,14 @@ const Sidebar = () => {
       window.removeEventListener("resize", getSize);
     };
   }, [app.title, window.innerWidth]);
+
+  const getUserById = async () => {
+    const response = await axiosJWT.get(
+      `http://localhost:3100/users/${sessionStorage.getItem("userId")}`
+    );
+    app.setBackdrop({ open: false });
+    app.setProfile(response.data);
+  };
 
   return (
     <Box
@@ -98,6 +120,8 @@ const Sidebar = () => {
         },
       }}
     >
+      <Loading />
+
       <ProSidebar
         style={{ position: isNonMobile ? Position : undefined }}
         collapsed={isCollapsed}
@@ -159,12 +183,14 @@ const Sidebar = () => {
           {!isCollapsed && (
             <Box mb="25px" mt="65px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                <img
+                <Avatar
                   alt="profil-images"
-                  width="100px"
-                  height="100px"
-                  src={`../../assets/user.png`}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
+                  src={app.profile.url}
+                  sx={{
+                    width: "100px",
+                    height: "100px",
+                    border: `3px solid ${colors.primary[400]}`,
+                  }}
                 />
               </Box>
 
@@ -175,7 +201,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {sessionStorage.getItem("nama_pengguna")}
+                  {app.profile.nama_pengguna}
                 </Typography>
               </Box>
             </Box>
@@ -194,6 +220,13 @@ const Sidebar = () => {
               title="Dashboard"
               to="/dashboard"
               icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="User Management"
+              to="/userManagement"
+              icon={<GroupIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -279,6 +312,37 @@ const Sidebar = () => {
           </Box>
         </Menu>
       </ProSidebar>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={app.snackbar.open}
+        onClose={(state) => {
+          app.setSnackbar({ open: false, message: "" });
+        }}
+        autoHideDuration={1000}
+        key={"snackbar"}
+      >
+        <Alert
+          onClose={(state) => {
+            app.setSnackbar({ open: false, message: "" });
+          }}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {app.snackbar.message}
+        </Alert>
+      </Snackbar>
+      {/* <Backdrop
+        color="success"
+        sx={{
+          backgroundColor: "#fff",
+          zIndex: 9999,
+        }}
+        open={app.backdrop.open}
+        onClose={app.backdrop.open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop> */}
     </Box>
   );
 };
