@@ -43,7 +43,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppContext>
-          <Loading />
+          {/* <Loading /> */}
           <div className="app">
             {/* <Sidebar /> */}
             {/* <main className="content"> */}

@@ -50,7 +50,7 @@ const AddUserManagement = () => {
           role: formik.values.role,
         }
       );
-      app.setBackdrop({ open: true });
+      app.setLoaderProgress({ show: true });
       app.setSnackbar({ open: true, message: response.data.message });
       navigate("/userManagement");
       // setTimeout(() => {

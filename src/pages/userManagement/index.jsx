@@ -91,7 +91,7 @@ const UserManagement = () => {
     const response = await axiosJWT.get(
       "http://localhost:3100/userManagements"
     );
-    // app.setBackdrop({ open: false });
+    app.setLoaderProgress({ show: false });
     setUserManagement(response.data.result);
   };
 
@@ -100,7 +100,7 @@ const UserManagement = () => {
       const response = await axiosJWT.delete(
         `http://localhost:3100/hapusUserManagement/${id}`
       );
-      app.setBackdrop({ open: true });
+      app.setLoaderProgress({ show: true });
       app.setSnackbar({ open: true, message: response.data.message });
     } catch (error) {
       console.log(error);

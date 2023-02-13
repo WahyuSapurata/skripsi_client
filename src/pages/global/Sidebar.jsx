@@ -69,7 +69,7 @@ const Sidebar = () => {
   }
 
   useEffect(() => {
-    app.setBackdrop({ open: true });
+    app.setLoaderProgress({ show: true });
     refreshToken().catch(() => {
       navigate("/");
     });
@@ -90,7 +90,8 @@ const Sidebar = () => {
     const response = await axiosJWT.get(
       `http://localhost:3100/users/${sessionStorage.getItem("userId")}`
     );
-    app.setBackdrop({ open: false });
+    // app.setBackdrop({ open: false });
+    app.setLoaderProgress({ show: false });
     app.setProfile(response.data);
   };
 

@@ -63,10 +63,10 @@ const Profile = () => {
         `http://localhost:3100/users/${sessionStorage.getItem("userId")}`,
         formData
       );
-      app.setBackdrop({ open: true });
+      app.setLoaderProgress({ show: true });
       app.setProfile(response.data.user);
       setTimeout(() => {
-        app.setBackdrop({ open: false });
+        app.setLoaderProgress({ show: false });
         navigate("/profile");
         app.setSnackbar({ open: true, message: response.data.message });
       }, 1000);

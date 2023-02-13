@@ -47,7 +47,7 @@ const EditUserManagement = () => {
         }
       );
       app.setSnackbar({ open: true, message: response.data.message });
-      app.setBackdrop({ open: true });
+      app.setLoaderProgress({ show: true });
       navigate("/userManagement");
     } catch (error) {
       console.log(error);

@@ -7,6 +7,7 @@ function AppContext(props) {
   const [title, setTitle] = useState("title");
   const [profile, setProfile] = useState({});
   const [snackbar, setSnackbar] = useState({ open: false, message: "" });
+  const [loaderProgress, setLoaderProgress] = useState({ show: true });
   const context = {
     title,
     setTitle,
@@ -16,6 +17,8 @@ function AppContext(props) {
     setSnackbar,
     backdrop,
     setBackdrop,
+    loaderProgress,
+    setLoaderProgress,
   };
   return <App.Provider value={context}>{props.children}</App.Provider>;
 }
