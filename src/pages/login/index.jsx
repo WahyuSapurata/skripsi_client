@@ -278,7 +278,7 @@ const Login = () => {
                 mt="8px"
               >
                 <Link
-                  href=""
+                  href="/register"
                   underline="none"
                   sx={{
                     p: "3px 10px",
@@ -292,7 +292,7 @@ const Login = () => {
                   Daftar
                 </Link>
                 <Link
-                  href="#"
+                  href="/forgotPassword"
                   sx={{ color: "rgb(25, 118, 210)" }}
                   underline="always"
                 >

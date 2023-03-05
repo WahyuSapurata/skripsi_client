@@ -1,6 +1,6 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AppContext from "./contex";
 // import Topbar from "./pages/global/Topbar";
 // import Sidebar from "./pages/global/Sidebar";
@@ -21,7 +21,9 @@ import Login from "./pages/login";
 import UserManagement from "./pages/userManagement";
 import AddUserManagement from "./pages/addData/addUserManagement";
 import EditUserManagement from "./pages/editData/editUserManagement";
-import Loading from "./components/Loading";
+// import Loading from "./components/Loading";
+import Register from "./pages/register";
+import ForgotPassword from "./pages/forgotPassword";
 // import { useContext, useEffect } from "react";
 // import { useEffect } from "react";
 // import refreshToken from "./middleware/RefreshToken";
@@ -50,6 +52,8 @@ function App() {
             {/* <Topbar /> */}
             <Routes>
               <Route path="/" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgotPassword" element={<ForgotPassword />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/userManagement" element={<UserManagement />} />
