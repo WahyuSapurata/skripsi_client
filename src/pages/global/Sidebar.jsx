@@ -3,9 +3,7 @@ import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import {
   Avatar,
-  Backdrop,
   Box,
-  CircularProgress,
   IconButton,
   Snackbar,
   Typography,
@@ -27,6 +25,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MenuOpenIconIcon from "@mui/icons-material/MenuOpen";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import GroupIcon from "@mui/icons-material/Group";
 import { App } from "../../contex";
 import { useEffect } from "react";
@@ -233,9 +232,20 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              <Typography variant="h6" color="#fff" sx={{ m: "15px 0 5px 20px" }}>
+              <Typography
+                variant="h6"
+                color="#fff"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
                 Data
               </Typography>
+              <Item
+                title="Jurnal Umum"
+                to="/jurnal"
+                icon={<NoteAltIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
               <Item
                 title="Manage Team"
                 to="/team"
@@ -257,7 +267,11 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              <Typography variant="h6" color="#fff" sx={{ m: "15px 0 5px 20px" }}>
+              <Typography
+                variant="h6"
+                color="#fff"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
                 Pages
               </Typography>
               <Item
@@ -281,7 +295,11 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              <Typography variant="h6" color="#fff" sx={{ m: "15px 0 5px 20px" }}>
+              <Typography
+                variant="h6"
+                color="#fff"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
                 Charts
               </Typography>
               <Item

@@ -24,6 +24,9 @@ import EditUserManagement from "./pages/editData/editUserManagement";
 // import Loading from "./components/Loading";
 import Register from "./pages/register";
 import ForgotPassword from "./pages/forgotPassword";
+import Jurnal from "./pages/jurnal";
+import AddJurnal from "./pages/addData/addJurnal";
+import EditJurnal from "./pages/editData/editJurnal";
 // import { useContext, useEffect } from "react";
 // import { useEffect } from "react";
 // import refreshToken from "./middleware/RefreshToken";
@@ -65,6 +68,9 @@ function App() {
                 path="/editUserManagement/:id"
                 element={<EditUserManagement />}
               />
+              <Route path="/jurnal" element={<Jurnal />} />
+              <Route path="/addJurnal" element={<AddJurnal />} />
+              <Route path="/editJurnal/:id" element={<EditJurnal />} />
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />
